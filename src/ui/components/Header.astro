@@ -1,11 +1,12 @@
 ---
 import { Button } from "./ui/button";
 import { AvatarItem } from "./ui/avatar";
+import { ModeToggle } from "./ModeToggle";
 import { LogOutIcon } from "lucide-react";
 ---
 
 <header
-  class="border-border flex flex-row items-center justify-between py-3 border-b-2"
+  class="border-border flex flex-row items-center justify-between px-2 py-3 border-b-2"
 >
   <div class="flex flex-row items-center gap-2">
     <AvatarItem
@@ -13,9 +14,9 @@ import { LogOutIcon } from "lucide-react";
       fallback="hey"
       src="https://github.com/shadcn.png"
     />
-    <p class="hidden md:block leading-7 text-xl">shadcn</p>
+    <p class="md:block hidden text-xl leading-7">shadcn</p>
     <form action="/logout" method="post">
-      <Button type="submit" title="Log out" variant={"ghost"} size={"icon"}>
+      <Button type="submit" title="Log out" variant="ghost" size="icon">
         <LogOutIcon size={20} />
       </Button>
     </form>
@@ -23,5 +24,5 @@ import { LogOutIcon } from "lucide-react";
   <h1 class="scroll-m-20 lg:text-5xl text-4xl font-extrabold tracking-tight">
     Threadz
   </h1>
-  <p>change</p>
+  <ModeToggle client:load />
 </header>
