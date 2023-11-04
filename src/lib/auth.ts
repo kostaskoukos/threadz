@@ -12,18 +12,17 @@ export const auth = lucia({
     session: "user_session",
     user: "user",
   }),
-  getUserAttributes: ({ avatarUrl, name }) => {
+  getUserAttributes: ({ avatar_url, name }) => {
     return {
       name,
-      avatarUrl,
+      avatar_url,
     };
   },
 });
 
-//TOOD: fix relative URL
-
-const SITE_URL = import.meta.env.VERCEL_URL
-  ? `https://${import.meta.env.VERCEL_URL}`
+//PUBLIC_VERCEL_URL is configured for Astro by vercel
+const SITE_URL = import.meta.env.PUBLIC_VERCEL_URL
+  ? `https://${import.meta.env.PUBLIC_VERCEL_URL}`
   : "http://localhost:4321";
 
 export const googleAuth = google(auth, {
