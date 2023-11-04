@@ -1,0 +1,27 @@
+---
+import { Button } from "./ui/button";
+import { AvatarItem } from "./ui/avatar";
+import { LogOutIcon } from "lucide-react";
+---
+
+<header
+  class="border-border flex flex-row items-center justify-between py-3 border-b-2"
+>
+  <div class="flex flex-row items-center gap-2">
+    <AvatarItem
+      client:load
+      fallback="hey"
+      src="https://github.com/shadcn.png"
+    />
+    <p class="hidden md:block leading-7 text-xl">shadcn</p>
+    <form action="/logout" method="post">
+      <Button type="submit" title="Log out" variant={"ghost"} size={"icon"}>
+        <LogOutIcon size={20} />
+      </Button>
+    </form>
+  </div>
+  <h1 class="scroll-m-20 lg:text-5xl text-4xl font-extrabold tracking-tight">
+    Threadz
+  </h1>
+  <p>change</p>
+</header>
