@@ -3,25 +3,37 @@ import { Button } from "./ui/button";
 import { AvatarItem } from "./ui/avatar";
 import { ModeToggle } from "./ModeToggle";
 import { LogOutIcon } from "lucide-react";
+
+const session = await Astro.locals.auth.validate();
 ---
 
 <header
-  class="border-border flex flex-row items-center justify-between px-2 py-3 border-b-2"
+  class={`border-border flex flex-row items-center ${
+    session ? "justify-between" : "justify-center"
+  } px-2 py-3 border-b-2`}
 >
-  <div class="flex flex-row items-center gap-2">
-    <AvatarItem
-      client:load
-      fallback="hey"
-      src="https://github.com/shadcn.png"
-    />
-    <p class="md:block hidden text-xl leading-7">shadcn</p>
-    <form action="/logout" method="post">
-      <Button type="submit" title="Log out" variant="ghost" size="icon">
-        <LogOutIcon size={20} />
-      </Button>
-    </form>
-  </div>
-  <h1 class="scroll-m-20 lg:text-5xl text-4xl font-extrabold tracking-tight">
+  {
+    session && (
+      <div class="flex flex-row items-center gap-2">
+        <AvatarItem
+          client:load
+          fallback="hey"
+          src="https://github.com/shadcn.png"
+        />
+        <p class="md:block hidden text-xl leading-7">shadcn</p>
+        <form action="/logout" method="post">
+          <Button type="submit" title="Log out" variant="ghost" size="icon">
+            <LogOutIcon size={20} />
+          </Button>
+        </form>
+      </div>
+    )
+  }
+  <h1
+    class={`scroll-m-20 lg:text-5xl text-4xl ${
+      !session && "flex-grow"
+    } font-extrabold tracking-tight text-center`}
+  >
     Threadz
   </h1>
   <ModeToggle client:load />

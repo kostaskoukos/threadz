@@ -1,1 +1,13 @@
-<a href="/redirect">login w/google</a>
+---
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/ui/components/ui/button";
+import Layout from "@/ui/layouts/Layout.astro";
+---
+
+<Layout title="Login">
+  <main class="flex items-center justify-center min-h-screen">
+    <a class={cn(buttonVariants(), "rounded-xl py-5 md:py-7")} href="/redirect">
+      <p class="md:text-2xl text-lg leading-7">Login with Google</p>
+    </a>
+  </main>
+</Layout>
