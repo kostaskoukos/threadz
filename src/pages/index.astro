@@ -1,4 +1,6 @@
 ---
+import { Button } from "@/ui/components/ui/button";
+import { Textarea } from "@/ui/components/ui/textarea";
 import Layout from "@/ui/layouts/Layout.astro";
 
 const session = await Astro.locals.auth.validate();
@@ -6,10 +8,10 @@ if (!session) return Astro.redirect("/login", 302);
 ---
 
 <Layout title="Welcome to Astro.">
-  <main>
-    <h4>{JSON.stringify(session, null, 2)}</h4>
-    <form method="post" action="/logout">
-      <button type="submit">logout</button>
+  <main class="md:border md:border-border md:max-w-xl mx-auto mt-3 rounded-md">
+    <form class="flex items-center gap-3 p-4" action="/publish" method="post">
+      <Textarea name="content" placeholder="Tell the world your thoughts..." />
+      <Button type="submit">Publish</Button>
     </form>
   </main>
 </Layout>
