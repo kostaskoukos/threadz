@@ -1,17 +1,61 @@
 ---
+import { db } from "@/lib/db";
+import { posts, user } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
+
 import { Button } from "@/ui/components/ui/button";
 import { Textarea } from "@/ui/components/ui/textarea";
 import Layout from "@/ui/layouts/Layout.astro";
 
 const session = await Astro.locals.auth.validate();
 if (!session) return Astro.redirect("/login", 302);
+
+let message = "";
+
+if (Astro.request.method === "POST") {
+  const data = await Astro.request.formData();
+  let content = data.get("content");
+  if (!!content && typeof content === "string") {
+    const text = content.trim();
+    try {
+      await db
+        .insert(posts)
+        .values({ content: text, userId: session.user.userId })
+        .run();
+    } catch (e) {
+      console.log(e);
+      message = "Something went wrong. Please try again.";
+    }
+  } else {
+    message = "Something went wrong. Please try again.";
+  }
+  return Astro.redirect("/");
+}
+
+const allPosts = await db
+  .select()
+  .from(posts)
+  .leftJoin(user, eq(posts.userId, user.id))
+  .all();
 ---
 
 <Layout title="Welcome to Astro.">
   <main class="md:border md:border-border md:max-w-xl mx-auto mt-3 rounded-md">
-    <form class="flex items-center gap-3 p-4" action="/publish" method="post">
-      <Textarea name="content" placeholder="Tell the world your thoughts..." />
+    <form class="flex items-center gap-3 p-4" action="/" method="post">
+      <Textarea
+        required
+        name="content"
+        placeholder="Tell the world your thoughts..."
+      />
       <Button type="submit">Publish</Button>
     </form>
+    <p class="pl-4 text-red-500">{message}</p>
+    {
+      allPosts.map(({ posts, user }) => (
+        <p class="whitespace-pre pl-4">
+          {posts.content} - {user?.name}
+        </p>
+      ))
+    }
   </main>
 </Layout>
