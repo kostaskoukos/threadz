@@ -15,6 +15,14 @@ import { ViewTransitions } from "astro:transitions";
 <html lang="en">
   <head>
     <ViewTransitions handleForms />
+    <meta charset="UTF-8" />
+    <meta name="referer" content="same-origin" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
     <script is:inline>
       const getThemePreference = () => {
         const theme = localStorage.getItem("theme");
@@ -45,14 +53,6 @@ import { ViewTransitions } from "astro:transitions";
         });
       }
     </script>
-    <meta charset="UTF-8" />
-    <meta name="referer" content="same-origin" />
-    <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="description" content={description} />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
   </head>
   <body>
     <Header />

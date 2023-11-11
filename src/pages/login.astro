@@ -1,10 +1,11 @@
 ---
+export const prerender = true;
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/ui/components/ui/button";
 import Layout from "@/ui/layouts/Layout.astro";
 ---
 
-<Layout title="Login">
+<Layout title="Login - Threadz" description="Login to Threadz using your Google account.">
   <main class="flex items-center justify-center min-h-screen">
     <a class={cn(buttonVariants(), "rounded-xl py-5 md:py-7")} href="/redirect">
       <p class="md:text-2xl text-lg leading-7">Login with Google</p>
