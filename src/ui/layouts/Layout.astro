@@ -39,10 +39,15 @@ import { ViewTransitions } from "astro:transitions";
           ? "dark"
           : "light";
       };
-      const isDark = getThemePreference() === "dark";
-      document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+      const changeTheme = () => {
+        const isDark = getThemePreference() === "dark";
+        document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+      };
+      changeTheme();
 
       if (typeof localStorage !== "undefined") {
+        document.addEventListener("astro:after-swap", changeTheme());
+
         new MutationObserver(() => {
           const isDark = document.documentElement.classList.contains("dark");
           localStorage.setItem("theme", isDark ? "dark" : "light");
