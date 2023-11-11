@@ -26,16 +26,13 @@ import { ViewTransitions } from "astro:transitions";
           : "light";
       };
       const changeTheme = () => {
-        console.log("changing theme...");
         const isDark = getThemePreference() === "dark";
         document.documentElement.classList[isDark ? "add" : "remove"]("dark");
-        console.log("changed theme");
       };
       changeTheme();
 
       if (typeof localStorage !== "undefined") {
         document.addEventListener("astro:after-swap", () => {
-          console.log("astro after swap");
           changeTheme();
         });
 
