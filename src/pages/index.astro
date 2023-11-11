@@ -6,6 +6,13 @@ import { eq } from "drizzle-orm";
 import { Button } from "@/ui/components/ui/button";
 import { Textarea } from "@/ui/components/ui/textarea";
 import Layout from "@/ui/layouts/Layout.astro";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+} from "@/ui/components/ui/card";
+import { AvatarItem } from "@/ui/components/ui/avatar";
 
 const session = await Astro.locals.auth.validate();
 if (!session) return Astro.redirect("/login", 302);
@@ -40,8 +47,10 @@ const allPosts = await db
 ---
 
 <Layout title="Welcome to Astro.">
-  <main class="md:border md:border-border md:max-w-xl mx-auto mt-3 rounded-md">
-    <form class="flex items-center gap-3 p-4" action="/" method="post">
+  <main
+    class="md:border md:border-border md:max-w-xl flex flex-col gap-6 py-4 mx-auto mt-3 rounded-md"
+  >
+    <form class="flex items-center gap-3 px-3" action="/" method="post">
       <Textarea
         required
         name="content"
@@ -49,13 +58,28 @@ const allPosts = await db
       />
       <Button type="submit">Publish</Button>
     </form>
-    <p class="pl-4 text-red-500">{message}</p>
-    {
-      allPosts.map(({ posts, user }) => (
-        <p class="whitespace-pre pl-4">
-          {posts.content} - {user?.name}
-        </p>
-      ))
-    }
+    {message && <p class="pl-4 text-red-500">{message}</p>}
+
+    <ul class="px-3 space-y-4">
+      {
+        allPosts.map(({ posts, user }) => (
+          <li>
+            <Card>
+              <CardHeader className="flex-row gap-2">
+                <AvatarItem
+                  client:load
+                  src={user?.avatarUrl!}
+                  fallback={user?.name!}
+                />
+                <CardDescription>{user?.name}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p class="whitespace-pre">{posts.content}</p>
+              </CardContent>
+            </Card>
+          </li>
+        ))
+      }
+    </ul>
   </main>
 </Layout>
