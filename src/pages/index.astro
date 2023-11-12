@@ -1,7 +1,7 @@
 ---
 import { db } from "@/lib/db";
 import { posts, user } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 import { Button } from "@/ui/components/ui/button";
 import { Textarea } from "@/ui/components/ui/textarea";
@@ -43,6 +43,7 @@ const allPosts = await db
   .select()
   .from(posts)
   .leftJoin(user, eq(posts.userId, user.id))
+  .orderBy(desc(posts.id))
   .all();
 ---
 
